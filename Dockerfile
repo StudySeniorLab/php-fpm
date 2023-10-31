@@ -25,6 +25,8 @@ RUN apt-get update && apt-get upgrade -y \
     libreadline-dev \
     libxslt1-dev \
     libzip-dev \
+    libjpeg-dev \
+    libonig-dev \
     memcached \
     wget \
     unzip \
@@ -44,7 +46,7 @@ RUN apt-get update && apt-get upgrade -y \
     sockets \
     xmlrpc \
     xsl \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --enable-gd \
     && docker-php-ext-install -j$(nproc) gd \
     && PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
@@ -54,11 +56,11 @@ RUN apt-get update && apt-get upgrade -y \
     && docker-php-ext-install ldap \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
-    && pecl install xdebug && docker-php-ext-enable xdebug \
-    && pecl install memcached && docker-php-ext-enable memcached \
-    && pecl install mongodb && docker-php-ext-enable mongodb \
-    && pecl install redis && docker-php-ext-enable redis \
-    && yes '' | pecl install imagick && docker-php-ext-enable imagick \
+    && pecl install xdebug-3.1.5 && docker-php-ext-enable xdebug \
+    && pecl install memcached-3.1.5 && docker-php-ext-enable memcached \
+    && pecl install mongodb-1.8.2 && docker-php-ext-enable mongodb \
+    && pecl install redis-5.3.1 && docker-php-ext-enable redis \
+    && yes '' | pecl install imagick-3.5.0 && docker-php-ext-enable imagick \
     && docker-php-source delete \
     && apt-get remove -y g++ wget \
     && apt-get autoremove --purge -y && apt-get autoclean -y && apt-get clean -y \
