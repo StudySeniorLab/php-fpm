@@ -3,7 +3,6 @@ FROM php:8.2-fpm-bookworm
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y \
     cron \
-    supervisor \
     g++ \
     libbz2-dev \
     libc-client-dev \
@@ -64,6 +63,3 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get autoremove --purge -y && apt-get autoclean -y && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* /var/tmp/*
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
